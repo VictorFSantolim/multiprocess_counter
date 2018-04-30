@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+
 //Numero maximo de processos filhos que calculam primalidade
 #define N_FILHOS 3
 
@@ -69,20 +70,17 @@ int main() {
 	    	else
 	    	{
 	    		filhosAteEntao++;
-	    		printf("Filhos criados ate entao: %d\n", filhosAteEntao);
-	    		
-	    		//VERIFICAR SE POSSO COLOCAR FORA DO DO WHILE
-	    		if(filhosAteEntao == 1)
-	    		{
-	    			close(paiParaFilho[0]);
-   					close(filhoParaPai[1]);
-	    		}
-	    		
 	    	}
 
        }
 
 	}while(getchar() != 10); //Enquanto nao pega um \n
+
+
+	//Fecha as streams nao usadas pelo pai
+	close(paiParaFilho[0]);
+   	close(filhoParaPai[1]);
+	    		
 
 	//Fecha a escrita na pipe do pai para filho, o que sinaliza aos filhos
 	//que podem parar de tentar ler novos numeros e podem encerrar.
@@ -124,12 +122,11 @@ void filhoCalcPrimo(int filhoParaPai[2] , int paiParaFilho[2] , int numFilho)
 	close(filhoParaPai[0]);
 	close(paiParaFilho[1]);
 
-	printf("Estou aqui 1\n");
-
 	//Tenta realizar a leitura de novos numeros no pipe
 	//Se houver, verifica se eh primo
 	while(read(paiParaFilho[0] , &n , 8) > 0)
 	{
+		
 		naoPrimo = 0;
 
 		//Se for 0 ou 1, nao eh primo
@@ -149,8 +146,6 @@ void filhoCalcPrimo(int filhoParaPai[2] , int paiParaFilho[2] , int numFilho)
 		// 0 = Eh primo
 		write(filhoParaPai[1] , &naoPrimo, 1);
 	}
-
-	printf("Estou aqui 2\n");
 
 	//Finaliza o processo
 	exit(1);
