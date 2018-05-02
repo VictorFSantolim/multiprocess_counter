@@ -18,7 +18,7 @@
 
 
 //Numero maximo de processos filhos que calculam primalidade
-#define N_FILHOS 3
+#define N_FILHOS 4
 
 //Prototipo da funcao que os filhos executam
 void filhoCalcPrimo(int filhoParaPai[2] , int paiParaFilho[2] , int numFilho);
