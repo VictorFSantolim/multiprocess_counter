@@ -88,7 +88,7 @@ int main() {
 
 
 	//Aguarda o encerramento de todos os processos filhos
-  	for(int i = 0; i < N_FILHOS; i++) 
+  	for(int i = 0; i < filhosAteEntao; i++) 
     	waitpid(filhos[i], NULL, 0);
 
     //Le as informacoes que os filhos colocaram na pipe, referente aos
